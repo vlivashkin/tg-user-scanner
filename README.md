@@ -28,7 +28,7 @@ client = TgUserScanner(username, api_id, api_hash)
 await client.start()
 ```
 
-### Get users of any channel with access to participants
+### Get users of any channel or chat with access to participants
 
 ```python
 channel_url = "<channel url>"
