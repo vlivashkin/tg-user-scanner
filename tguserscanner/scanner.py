@@ -11,7 +11,7 @@ from tqdm.auto import tqdm
 log = logging.getLogger(__name__)
 
 
-class TgGetUsers:
+class TgUserScanner:
     def __init__(self, username, api_id, api_hash):
         self.username = username
         self.api_id = api_id

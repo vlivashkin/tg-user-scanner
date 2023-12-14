@@ -1,6 +1,6 @@
-# Telegram Get Users
+# TgUserScanner
 
-Get Telegram usernames from your dialogs, chats and channels.
+Extracts the usernames of participants from Telegram chats, channels, and DM dialogs.
 
 ## Getting started
 1. Obtain `api_id` and `api_hash`.
@@ -22,7 +22,9 @@ Get Telegram usernames from your dialogs, chats and channels.
 ## Use cases
 
 ```python
-client = TgGetUsers(username, api_id, api_hash)
+from tguserscanner import TgUserScanner
+
+client = TgUserScanner(username, api_id, api_hash)
 await client.start()
 ```
 
