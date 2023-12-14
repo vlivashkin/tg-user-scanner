@@ -51,7 +51,7 @@ my_dialogs = await client.get_my_dialogs()
 dialog_users, my_channels, my_chats, _ = parse_dialogs(my_dialogs)
 ```
 
-#### Get users of a chat without URL
+#### Find a chat by name (e.g. it doesn't have a URL) and get all users from it
 
 ```python
 chat = find_by_title("<Chat name>", my_chats)
