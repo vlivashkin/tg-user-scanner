@@ -19,7 +19,7 @@ Get Telegram usernames from your dialogs, chats and channels.
 
 3. Examples of usage are in [examples.ipynb](examples.ipynb) notebook.
 
-## Examples
+## Use cases
 
 ```python
 client = TgGetUsers(username, api_id, api_hash)
