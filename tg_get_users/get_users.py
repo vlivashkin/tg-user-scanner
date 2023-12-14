@@ -1,11 +1,11 @@
 import logging
-from typing import List, Tuple
+from typing import List, Tuple, Union
 
 from telethon import TelegramClient
-from telethon.tl.functions.channels import GetParticipantsRequest, GetFullChannelRequest
+from telethon.hints import Entity
+from telethon.tl.functions.channels import GetFullChannelRequest
 from telethon.tl.functions.messages import GetHistoryRequest
-from telethon.tl.types import ChannelParticipantsSearch
-from telethon.tl.types import User, Channel, Message
+from telethon.tl.types import User, Channel, Message, Dialog
 from tqdm.auto import tqdm
 
 log = logging.getLogger(__name__)
@@ -23,59 +23,15 @@ class TgGetUsers:
     async def start(self):
         await self.client.start()
 
-    async def get_channel_participants(self, channel_url: str) -> List[User]:
-        # https://github.com/LonamiWebs/Telethon/issues/580#issuecomment-362802359
+    async def get_my_dialogs(self) -> List[Dialog]:
+        dialogs = await self.client.get_dialogs()
+        return dialogs
 
-        channel = await self.client.get_entity(channel_url)
+    async def get_participants(self, entity: Union[Entity, str]) -> List[User]:
+        user_list = await self.client.get_participants(entity=entity)
+        return user_list
 
-        queryKey = [
-            "a",
-            "b",
-            "c",
-            "d",
-            "e",
-            "f",
-            "g",
-            "h",
-            "i",
-            "j",
-            "k",
-            "l",
-            "m",
-            "n",
-            "o",
-            "p",
-            "q",
-            "r",
-            "s",
-            "t",
-            "u",
-            "v",
-            "w",
-            "x",
-            "y",
-            "z",
-        ]
-        all_participants = []
-
-        for key in tqdm(queryKey, desc="Alphabet traversal"):
-            offset = 0
-            limit = 100
-            while True:
-                participants = await self.client(
-                    GetParticipantsRequest(channel, ChannelParticipantsSearch(key), offset, limit, hash=0)
-                )
-                if not participants.users:
-                    break
-                all_participants.extend(participants.users)
-                offset += len(participants.users)
-
-        # deduplicate by id
-        all_participants = list({u.id: u for u in all_participants}.values())
-
-        return all_participants
-
-    async def get_group_messages(self, channel_url: str) -> List[Message]:
+    async def get_chat_messages(self, channel_url: str) -> List[Message]:
         # https://github.com/amiryousefi/telegram-analysis/blob/master/ChannelMessages.py
 
         channel = await self.client.get_entity(channel_url)
@@ -112,7 +68,7 @@ class TgGetUsers:
 
         return all_messages
 
-    async def get_users_by_messages(self, messages: List[Message]) -> Tuple[List[User], List[Channel]]:
+    async def get_users_of_messages(self, messages: List[Message]) -> Tuple[List[User], List[Channel]]:
         user_ids = set()
         channel_ids = set()
         for message in messages:
