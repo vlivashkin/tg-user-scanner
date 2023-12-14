@@ -9,11 +9,11 @@ Extracts the usernames of participants from Telegram chats, channels, and DM dia
 
 2. Install this package
     ```bash
-    python3 -m pip install git+https://github.com/vlivashkin/telegram_get_users.git
+    python3 -m pip install git+https://github.com/vlivashkin/TgUserScanner.git
     ```
     or just
     ```bash
-    git clone https://github.com/vlivashkin/telegram_get_users.git
+    git clone https://github.com/vlivashkin/TgUserScanner.git
     ```
     it.
 
